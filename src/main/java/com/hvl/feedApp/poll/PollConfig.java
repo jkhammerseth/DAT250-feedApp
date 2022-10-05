@@ -11,7 +11,7 @@ import java.util.List;
 @Configuration
 public class PollConfig {
     @Bean
-    CommandLineRunner commandLineRunner(PollRepository repository){
+    CommandLineRunner pollCommandLineRunner(PollRepository repository){
         return args -> {
             Poll poll_1 = new Poll(
                    4,
