@@ -13,7 +13,9 @@ public class Poll {
             name = "poll_sequence",
             sequenceName = "poll_sequence",
             allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "poll_sequence")
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "poll_sequence")
     private long pollID;
     private int yesCount;
     private int noCount;
@@ -35,15 +37,6 @@ public class Poll {
     }
 
     public Poll() {}
-
-    public Poll(long pollID, int yesCount, int noCount, String question, LocalDate startTime, LocalDate endTime) {
-        this.pollID = pollID;
-        this.yesCount = yesCount;
-        this.noCount = noCount;
-        this.question = question;
-        this.startTime = startTime;
-        this.endTime = endTime;
-    }
 
     public Poll(int yesCount, int noCount,String question, LocalDate startTime, LocalDate endTime) {
         this.yesCount = yesCount;

@@ -32,6 +32,7 @@ public class PollController {
         voteUser.ifPresentOrElse(
                 (owner) -> {
                     poll.setOwner(owner);
+                    owner.addOwnedPoll(poll);
                     },
                 () -> {System.out.println("when does this print?");});
         }

@@ -16,7 +16,6 @@ public class VoteUserService {
     public VoteUserService(VoteUserRepository voteUserRepository) {
         this.voteUserRepository = voteUserRepository;
     }
-
     public List<VoteUser> getVoteUsers() {
         return voteUserRepository.findAll();
     }

@@ -13,7 +13,9 @@ public class VoteUser {
             name = "voteUser_sequence",
             sequenceName = "voteUser_sequence",
             allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "voteUser_sequence")
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "voteUser_sequence")
     private long id;
     private String username;
     private String email;
@@ -24,17 +26,15 @@ public class VoteUser {
         return ownedPolls;
     }
 
+    public void addOwnedPoll(Poll poll){
+        ownedPolls.add(poll);
+    }
+
     public void setOwnedPolls(List<Poll> ownedPolls) {
         this.ownedPolls = ownedPolls;
     }
 
     public VoteUser() {}
-
-    public VoteUser(long id, String username, String email) {
-        this.id = id;
-        this.username = username;
-        this.email = email;
-    }
 
     public VoteUser(String username, String email) {
         this.username = username;
