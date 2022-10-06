@@ -1,5 +1,7 @@
 package com.hvl.feedApp.poll;
 
+import com.hvl.feedApp.voteUser.VoteUser;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 
@@ -18,8 +20,19 @@ public class Poll {
     private String question;
     private LocalDate startTime;
     private LocalDate endTime;
+    @ManyToOne(targetEntity = VoteUser.class)
+    private VoteUser owner;
     @Transient
+    @Enumerated(EnumType.STRING)
     private Status status;
+
+    public VoteUser getOwner() {
+        return owner;
+    }
+
+    public void setOwner(VoteUser owner) {
+        this.owner = owner;
+    }
 
     public Poll() {}
 
@@ -32,7 +45,7 @@ public class Poll {
         this.endTime = endTime;
     }
 
-    public Poll(int yesCount, int noCount, String question, LocalDate startTime, LocalDate endTime) {
+    public Poll(int yesCount, int noCount,String question, LocalDate startTime, LocalDate endTime) {
         this.yesCount = yesCount;
         this.noCount = noCount;
         this.question = question;

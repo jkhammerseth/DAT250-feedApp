@@ -1,6 +1,9 @@
 package com.hvl.feedApp.voteUser;
 
+import com.hvl.feedApp.poll.Poll;
+
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table
@@ -14,6 +17,16 @@ public class VoteUser {
     private long id;
     private String username;
     private String email;
+    @OneToMany(mappedBy = "owner")
+    private List<Poll> ownedPolls;
+
+    public List<Poll> getOwnedPolls() {
+        return ownedPolls;
+    }
+
+    public void setOwnedPolls(List<Poll> ownedPolls) {
+        this.ownedPolls = ownedPolls;
+    }
 
     public VoteUser() {}
 

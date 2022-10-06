@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "/voteUser")
@@ -34,5 +35,9 @@ public class VoteUserController {
             @RequestParam(required = false) String username,
             @RequestParam(required = false) String email){
                 voteUserService.updateVoteUser(voteUserID, username, email);
+    }
+
+    public Optional<VoteUser> getById(Long id){
+        return voteUserService.getById(id);
     }
 }

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class VoteUserService {
@@ -18,6 +19,9 @@ public class VoteUserService {
 
     public List<VoteUser> getVoteUsers() {
         return voteUserRepository.findAll();
+    }
+    public Optional<VoteUser> getById(Long id){
+        return voteUserRepository.findById(id);
     }
 
     public void createNewVoteUser(VoteUser voteUser) {
