@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PollService {
@@ -20,6 +21,10 @@ public class PollService {
 
     public List<Poll> getPolls(){
         return pollRepository.findAll();
+    }
+
+    public Optional<Poll> getPollById(Long pollID){
+        return pollRepository.findById(pollID);
     }
 
     public void createNewPoll(Poll poll) {

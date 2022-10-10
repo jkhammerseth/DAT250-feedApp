@@ -19,7 +19,7 @@ public class VoteUser {
     private long id;
     private String username;
     private String email;
-    @OneToMany(mappedBy = "owner")
+    @OneToMany(fetch = FetchType.LAZY ,mappedBy = "owner")
     private List<Poll> ownedPolls;
 
     public List<Poll> getOwnedPolls() {

@@ -1,5 +1,6 @@
 package com.hvl.feedApp.poll;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.hvl.feedApp.voteUser.VoteUser;
 
 import javax.persistence.*;
@@ -11,8 +12,7 @@ public class Poll {
     @Id
     @SequenceGenerator(
             name = "poll_sequence",
-            sequenceName = "poll_sequence",
-            allocationSize = 1)
+            sequenceName = "poll_sequence")
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
             generator = "poll_sequence")
@@ -20,15 +20,19 @@ public class Poll {
     private int yesCount;
     private int noCount;
     private String question;
+    @JsonFormat(pattern="yyyy-MM-dd")
     private LocalDate startTime;
+    @JsonFormat(pattern="yyyy-MM-dd")
     private LocalDate endTime;
+
     @ManyToOne(targetEntity = VoteUser.class)
+    @JoinColumn(name = "owner_id")
     private VoteUser owner;
     @Transient
     @Enumerated(EnumType.STRING)
     private Status status;
 
-    public VoteUser getOwner() {
+    public VoteUser getOwnerId() {
         return owner;
     }
 
@@ -38,9 +42,10 @@ public class Poll {
 
     public Poll() {}
 
-    public Poll(int yesCount, int noCount,String question, LocalDate startTime, LocalDate endTime) {
+    public Poll(int yesCount, int noCount,VoteUser owner , String question, LocalDate startTime, LocalDate endTime) {
         this.yesCount = yesCount;
         this.noCount = noCount;
+        this.owner = owner;
         this.question = question;
         this.startTime = startTime;
         this.endTime = endTime;

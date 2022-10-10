@@ -3,6 +3,7 @@ package com.hvl.feedApp.poll;
 import java.util.List;
 import java.util.Optional;
 
+import com.google.gson.Gson;
 import com.hvl.feedApp.voteUser.VoteUser;
 import com.hvl.feedApp.voteUser.VoteUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,26 +26,23 @@ public class PollController {
         return pollService.getPolls();
     }
 
-    @PostMapping(path = "{voteUserID}")
-    public void createNewPoll(@RequestBody Poll poll,@PathVariable("voteUserID") Long voteUserID){
-        try {
-        Optional<VoteUser> voteUser = voteUserService.getById(voteUserID);
-        voteUser.ifPresentOrElse(
-                (owner) -> {
-                    poll.setOwner(owner);
-                    owner.addOwnedPoll(poll);
-                    },
-                () -> {System.out.println("when does this print?");});
-        }
-        catch (Exception e){
-            System.out.println("User does not exist");
-        }
+    @GetMapping(path = "{pollID}")
+    public Optional<Poll> getPollById(@PathVariable("pollID") Long pollID){
+        return pollService.getPollById(pollID);
+    }
+
+    @PostMapping(params = {"owner_id"})
+    public void createNewPoll(@RequestBody Poll poll){
+        //, @RequestParam Long owner_id
+        //try {(owner)}
+        //poll.setOwner(voteUserService.getById(owner_id));
         pollService.createNewPoll(poll);
     }
     @DeleteMapping(path = "{pollID}")
     public void deletePoll(@PathVariable("pollID") Long pollID){
         pollService.deletePoll(pollID);
     }
+
     @PutMapping(path = "{pollID}")
     public void updatePoll(
             @PathVariable("pollID") Long pollID,
