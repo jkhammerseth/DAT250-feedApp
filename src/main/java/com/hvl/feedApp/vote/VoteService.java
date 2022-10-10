@@ -25,4 +25,11 @@ public class VoteService {
     public void createVote(Vote vote){
         voteRepository.save(vote);
     }
+    public void deleteVote(Long voteID){
+        boolean exists = voteRepository.existsById(voteID);
+        if (!exists){
+            throw new IllegalStateException("Vote with id: "+ voteID + " does not exist");
+        }
+        voteRepository.deleteById(voteID);
+    }
 }
