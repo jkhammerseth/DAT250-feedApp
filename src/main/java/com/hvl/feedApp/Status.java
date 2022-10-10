@@ -1,4 +1,4 @@
-package com.hvl.feedApp.poll;
+package com.hvl.feedApp;
 
 public enum Status {
     ACTIVE,

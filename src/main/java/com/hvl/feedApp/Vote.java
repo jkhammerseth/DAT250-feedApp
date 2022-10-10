@@ -1,8 +1,5 @@
-package com.hvl.feedApp.vote;
+package com.hvl.feedApp;
 
-
-import com.hvl.feedApp.poll.Poll;
-import com.hvl.feedApp.voteUser.VoteUser;
 
 import javax.persistence.*;
 
@@ -18,7 +15,7 @@ public class Vote {
             strategy = GenerationType.SEQUENCE,
             generator = "vote_sequence")
     private long voteID;
-    private Answer answer;
+    private boolean answer;
     @OneToOne
     private VoteUser voter;
     @OneToOne
@@ -27,17 +24,17 @@ public class Vote {
     public Vote() {
     }
 
-    public Vote(Answer answer, VoteUser voter, Poll poll) {
+    public Vote(boolean answer, VoteUser voter, Poll poll) {
         this.answer = answer;
         this.voter = voter;
         this.poll = poll;
     }
 
-    public Answer getAnswer() {
+    public boolean getAnswer() {
         return answer;
     }
 
-    public void setAnswer(Answer answer) {
+    public void setAnswer(boolean answer) {
         this.answer = answer;
     }
 

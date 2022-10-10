@@ -1,4 +1,4 @@
-package com.hvl.feedApp.vote;
+package com.hvl.feedApp;
 
 public enum Answer {
     YES,

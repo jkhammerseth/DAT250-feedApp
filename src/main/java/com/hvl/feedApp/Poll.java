@@ -1,7 +1,6 @@
-package com.hvl.feedApp.poll;
+package com.hvl.feedApp;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.hvl.feedApp.voteUser.VoteUser;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -32,7 +31,7 @@ public class Poll {
     @Enumerated(EnumType.STRING)
     private Status status;
 
-    public VoteUser getOwnerId() {
+    public VoteUser getOwner() {
         return owner;
     }
 

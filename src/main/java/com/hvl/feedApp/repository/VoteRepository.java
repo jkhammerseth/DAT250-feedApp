@@ -1,5 +1,6 @@
-package com.hvl.feedApp.vote;
+package com.hvl.feedApp.repository;
 
+import com.hvl.feedApp.Vote;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

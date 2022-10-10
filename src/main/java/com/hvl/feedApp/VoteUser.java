@@ -1,6 +1,4 @@
-package com.hvl.feedApp.voteUser;
-
-import com.hvl.feedApp.poll.Poll;
+package com.hvl.feedApp;
 
 import javax.persistence.*;
 import java.util.List;

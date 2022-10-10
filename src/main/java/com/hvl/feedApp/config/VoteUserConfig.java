@@ -1,5 +1,7 @@
-package com.hvl.feedApp.voteUser;
+package com.hvl.feedApp.config;
 
+import com.hvl.feedApp.repository.VoteUserRepository;
+import com.hvl.feedApp.VoteUser;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

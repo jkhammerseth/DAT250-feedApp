@@ -1,10 +1,12 @@
-package com.hvl.feedApp.vote;
+package com.hvl.feedApp.service;
 
+import com.hvl.feedApp.repository.VoteRepository;
+import com.hvl.feedApp.Vote;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class VoteService {
@@ -19,8 +21,9 @@ public class VoteService {
     public List<Vote> getVotes(){
         return voteRepository.findAll();
     }
-    public Optional<Vote> getVoteById(Long voteID){
-        return voteRepository.findById(voteID);
+
+    public Vote getVoteById(Long voteID){
+        return voteRepository.findById(voteID).orElseThrow(() -> new IllegalStateException("Vote with id: "+ voteID + " does not exist"));
     }
     public void createVote(Vote vote){
         voteRepository.save(vote);
@@ -32,4 +35,10 @@ public class VoteService {
         }
         voteRepository.deleteById(voteID);
     }
+    @Transactional
+    public void updateVoteById(Long voteID){
+        voteRepository.findById(voteID).orElseThrow(() -> new IllegalStateException("Vote with id: "+ voteID + " does not exist"));
+        //do changes to vote here.. vote.setAnswer etc
+    }
+
 }

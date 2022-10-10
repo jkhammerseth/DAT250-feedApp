@@ -1,11 +1,12 @@
-package com.hvl.feedApp.voteUser;
+package com.hvl.feedApp.service;
 
+import com.hvl.feedApp.repository.VoteUserRepository;
+import com.hvl.feedApp.VoteUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class VoteUserService {
@@ -19,8 +20,8 @@ public class VoteUserService {
     public List<VoteUser> getVoteUsers() {
         return voteUserRepository.findAll();
     }
-    public Optional<VoteUser> getById(Long id){
-        return voteUserRepository.findById(id);
+    public VoteUser getById(Long voteUserID){
+        return voteUserRepository.findById(voteUserID).orElseThrow(() -> new IllegalStateException("Vote with id: "+ voteUserID + " does not exist"));
     }
 
     public void createNewVoteUser(VoteUser voteUser) {

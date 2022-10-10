@@ -1,4 +1,4 @@
-package com.hvl.feedApp.voteUser;
+package com.hvl.feedApp;
 
 public enum Role {
     ADMIN,
