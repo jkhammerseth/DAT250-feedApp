@@ -15,3 +15,8 @@
   - \l (no skal feedappdb dukke opp i liste over databaser)
   - \c feedappdb (koble til databasen)
   - \d (liste opp relasjoner og tables)
+
+
+
+# Postman:
+Import this [Postman JSON](https://www.getpostman.com/collections/51079e8f1eabbe1f4071) into your postman applicaton for API tests 
