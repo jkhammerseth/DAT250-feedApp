@@ -1,5 +1,7 @@
-package com.hvl.feedApp.voteUser;
+package com.hvl.feedApp.controller;
 
+import com.hvl.feedApp.VoteUser;
+import com.hvl.feedApp.service.VoteUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,6 +22,10 @@ public class VoteUserController {
     public List<VoteUser> getVoteUsers(){
         return voteUserService.getVoteUsers();
     }
+    @GetMapping(path = "{voteUserID}")
+    public VoteUser getById(@PathVariable("voteUserID") Long voteUserID){
+        return voteUserService.getById(voteUserID);
+    }
     @PostMapping
     public void createNewVoteUser(@RequestBody VoteUser voteUser){
         voteUserService.createNewVoteUser(voteUser);
@@ -35,4 +41,5 @@ public class VoteUserController {
             @RequestParam(required = false) String email){
                 voteUserService.updateVoteUser(voteUserID, username, email);
     }
+
 }

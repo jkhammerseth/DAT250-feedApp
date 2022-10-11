@@ -1,10 +1,11 @@
-package com.hvl.feedApp.poll;
+package com.hvl.feedApp.service;
 
+import com.hvl.feedApp.Poll;
+import com.hvl.feedApp.repository.PollRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.time.LocalTime;
 import java.util.List;
 
 @Service
@@ -21,8 +22,12 @@ public class PollService {
         return pollRepository.findAll();
     }
 
-    public void createNewPoll(Poll poll) {
-        pollRepository.save(poll);
+    public Poll getPollById(Long pollID){
+        return pollRepository.findById(pollID).orElseThrow(() -> new IllegalStateException("Poll with id: "+ pollID + " does not exist"));
+    }
+
+    public Poll createNewPoll(Poll poll) {
+        return pollRepository.save(poll);
     }
 
     public void deletePoll(Long pollID) {
