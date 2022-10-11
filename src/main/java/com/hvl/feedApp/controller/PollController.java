@@ -7,6 +7,8 @@ import com.hvl.feedApp.Poll;
 import com.hvl.feedApp.service.PollService;
 import com.hvl.feedApp.service.VoteUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -31,15 +33,15 @@ public class PollController {
         return pollService.getPollById(pollID);
     }
 
-    @PostMapping(params = {"owner_id"})
-    public void createNewPoll(@RequestBody JsonObject poll){
-        JsonObject test = poll;
-        System.out.println("ditta her: "+test.get("owner"));
+    @PostMapping("")
+    public ResponseEntity<Poll> createNewPoll(@RequestBody Poll poll){
+        //JsonObject test = poll;
+        //System.out.println("ditta her: "+test.get("owner"));
         //, @RequestParam Long owner_id
         //try {(owner)}
         //poll.setOwner(voteUserService.getById(owner_id));
-
-        //pollService.createNewPoll(poll);
+        System.out.println("dis work?"+poll.toString());
+        return new ResponseEntity<Poll>(pollService.createNewPoll(poll), HttpStatus.CREATED);
     }
     @DeleteMapping(path = "{pollID}")
     public void deletePoll(@PathVariable("pollID") Long pollID){

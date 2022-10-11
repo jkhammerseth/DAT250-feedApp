@@ -1,5 +1,7 @@
 package com.hvl.feedApp;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -14,10 +16,12 @@ public class VoteUser {
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
             generator = "voteUser_sequence")
-    private long id;
+    private long voteUserId;
     private String username;
     private String email;
-    @OneToMany(fetch = FetchType.LAZY ,mappedBy = "owner")
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")//fetch = FetchType.LAZY)//mappedBy = "owner")
+    //@JoinColumn(name = "owner_id")
     private List<Poll> ownedPolls;
 
     public List<Poll> getOwnedPolls() {
@@ -39,12 +43,12 @@ public class VoteUser {
         this.email = email;
     }
 
-    public long getId() {
-        return id;
+    public long getVoteUserId() {
+        return voteUserId;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setVoteUserId(long id) {
+        this.voteUserId = id;
     }
 
     public String getUsername() {

@@ -25,7 +25,11 @@ public class Poll {
     private LocalDate endTime;
 
     @ManyToOne(targetEntity = VoteUser.class)
-    @JoinColumn(name = "owner_id")
+    /*@JoinColumn(
+            name = "owner_id",
+            referencedColumnName = "voteUserId"
+    )*/
+    //@ToString.Exclude //Prevent infinite tostring loop
     private VoteUser owner;
     @Transient
     @Enumerated(EnumType.STRING)
@@ -33,6 +37,20 @@ public class Poll {
 
     public VoteUser getOwner() {
         return owner;
+    }
+
+    @Override
+    public String toString() {
+        return "Poll{" +
+                "pollID=" + pollID +
+                ", yesCount=" + yesCount +
+                ", noCount=" + noCount +
+                ", question='" + question + '\'' +
+                ", startTime=" + startTime +
+                ", endTime=" + endTime +
+                ", owner=" + owner +
+                ", status=" + status +
+                '}';
     }
 
     public void setOwner(VoteUser owner) {

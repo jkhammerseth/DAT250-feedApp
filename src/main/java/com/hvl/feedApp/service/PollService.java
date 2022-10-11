@@ -26,8 +26,8 @@ public class PollService {
         return pollRepository.findById(pollID).orElseThrow(() -> new IllegalStateException("Poll with id: "+ pollID + " does not exist"));
     }
 
-    public void createNewPoll(Poll poll) {
-        pollRepository.save(poll);
+    public Poll createNewPoll(Poll poll) {
+        return pollRepository.save(poll);
     }
 
     public void deletePoll(Long pollID) {
