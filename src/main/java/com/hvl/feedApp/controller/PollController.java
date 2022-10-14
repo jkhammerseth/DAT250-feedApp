@@ -2,10 +2,9 @@ package com.hvl.feedApp.controller;
 
 import java.util.List;
 
-import com.google.gson.JsonObject;
 import com.hvl.feedApp.Poll;
+import com.hvl.feedApp.service.AgentService;
 import com.hvl.feedApp.service.PollService;
-import com.hvl.feedApp.service.VoteUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,12 +13,12 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(path = "/poll")
 public class PollController {
-    private final VoteUserService voteUserService;
+    private final AgentService agentService;
     private final PollService pollService;
 
     @Autowired
-    public PollController(VoteUserService voteUserService, PollService pollService) {
-        this.voteUserService = voteUserService;
+    public PollController(AgentService agentService, PollService pollService) {
+        this.agentService = agentService;
         this.pollService = pollService;
     }
 

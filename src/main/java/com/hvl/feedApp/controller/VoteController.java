@@ -1,5 +1,7 @@
 package com.hvl.feedApp.controller;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.hvl.feedApp.Vote;
 import com.hvl.feedApp.service.VoteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,8 +29,16 @@ public class VoteController {
         return voteService.getVoteById(voteID);
     }
     @PostMapping
-    public void createVote(@RequestBody Vote vote){
-        voteService.createVote(vote);
+    public void createVote(@RequestBody String voteString){
+        JsonObject voteJson = new Gson().fromJson(voteString, JsonObject.class);
+
+        //TODO: Error handling, field validation!
+        Long voterID = voteJson.get("voter_id").getAsLong();
+        boolean answerYes = voteJson.get("answer_yes").getAsBoolean();
+
+
+        Vote vote = voteService.createVote(voterID, answerYes);
+
     }
 
     @DeleteMapping(path = "{voteID}")

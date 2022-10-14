@@ -6,6 +6,12 @@ import javax.persistence.*;
 @Entity
 @Table
 public class Vote {
+    public Vote(boolean answer, Agent voter, Poll poll) {
+        this.answer = answer;
+        this.voter = voter;
+        this.poll = poll;
+    }
+
     @Id
     @SequenceGenerator(
             name = "vote_sequence",
@@ -14,20 +20,15 @@ public class Vote {
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
             generator = "vote_sequence")
+    @Column(name="vote_id")
     private long voteID;
     private boolean answer;
     @OneToOne
-    private VoteUser voter;
+    private Agent voter;
     @OneToOne
     private Poll poll;
 
     public Vote() {
-    }
-
-    public Vote(boolean answer, VoteUser voter, Poll poll) {
-        this.answer = answer;
-        this.voter = voter;
-        this.poll = poll;
     }
 
     public boolean getAnswer() {
@@ -38,11 +39,11 @@ public class Vote {
         this.answer = answer;
     }
 
-    public VoteUser getVoter() {
+    public Agent getVoter() {
         return voter;
     }
 
-    public void setVoter(VoteUser voter) {
+    public void setVoter(Agent voter) {
         this.voter = voter;
     }
 
