@@ -28,18 +28,6 @@ public class VoteController {
     public Vote getVoteById(@PathVariable("voteID") Long voteID){
         return voteService.getVoteById(voteID);
     }
-    @PostMapping
-    public void createVote(@RequestBody String voteString){
-        JsonObject voteJson = new Gson().fromJson(voteString, JsonObject.class);
-
-        //TODO: Error handling, field validation!
-        Long voterID = voteJson.get("voter_id").getAsLong();
-        boolean answerYes = voteJson.get("answer_yes").getAsBoolean();
-
-
-        Vote vote = voteService.createVote(voterID, answerYes);
-
-    }
 
     @DeleteMapping(path = "{voteID}")
     public void deleteVote(@PathVariable("voteID") Long voteID){

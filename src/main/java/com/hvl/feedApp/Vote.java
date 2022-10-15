@@ -23,9 +23,22 @@ public class Vote {
     @Column(name="vote_id")
     private long voteID;
     private boolean answer;
-    @OneToOne
+
+    public long getVoteID() {
+        return voteID;
+    }
+
+    public void setVoteID(long voteID) {
+        this.voteID = voteID;
+    }
+
+    public boolean isAnswer() {
+        return answer;
+    }
+
+    @OneToOne//(cascade = CascadeType.REMOVE, orphanRemoval = true)
     private Agent voter;
-    @OneToOne
+    @OneToOne//(cascade = CascadeType.REMOVE, orphanRemoval = true)
     private Poll poll;
 
     public Vote() {

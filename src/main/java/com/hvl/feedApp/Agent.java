@@ -46,6 +46,14 @@ public class Agent {
         ownedPolls.add(poll);
     }
 
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
     public long getAgentID() {
         return agentID;
     }

@@ -62,6 +62,19 @@ public class TestConfig {
             bobsVote.setAnswer(true);
             testPoll.setYesCount(testPoll.getYesCount()+1);
 
+            Vote bobsVote1 = new Vote();
+            bobsVote1.setPoll(testExpiredPoll);
+            bobsVote1.setVoter(Bob);
+            bobsVote1.setAnswer(true);
+            testPoll.setYesCount(testPoll.getYesCount()+1);
+
+
+            Vote geirsVote = new Vote();
+            geirsVote.setPoll(testPoll);
+            geirsVote.setVoter(Geir);
+            geirsVote.setAnswer(true);
+            testPoll.setYesCount(testPoll.getYesCount()+1);
+
             ArrayList<Poll> bobsPolls = new ArrayList<Poll>();
             bobsPolls.add(testPoll);
             bobsPolls.add(testFuturePoll);
@@ -70,7 +83,7 @@ public class TestConfig {
 
             aRepository.saveAll(List.of(Geir,Bob));
             pRepository.saveAll(List.of(testPoll, testFuturePoll, testExpiredPoll));
-            vRepository.save(bobsVote);
+            vRepository.saveAll(List.of(bobsVote, bobsVote1, geirsVote));
 
         };
     }

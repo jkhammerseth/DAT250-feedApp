@@ -1,17 +1,27 @@
 package com.hvl.feedApp.service;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.hvl.feedApp.Agent;
+import com.hvl.feedApp.Enums.Role;
+import com.hvl.feedApp.Vote;
 import com.hvl.feedApp.repository.AgentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class AgentService {
 
     private final AgentRepository agentRepository;
+
+    private static final Set<String> allowedRoles = new HashSet<String>(Arrays.asList("USER", "ADMIN", "DEVICE"));
+
 
     @Autowired
     public AgentService(AgentRepository agentRepository) {
@@ -24,11 +34,18 @@ public class AgentService {
         return agentRepository.findById(agentID).orElseThrow(() -> new IllegalStateException("Vote with id: "+ agentID + " does not exist"));
     }
 
-    public void createNewAgent(Agent agent) {
+    public Agent createNewAgent(Agent agent) {
         agentRepository.save(agent);
+        return this.getById(agent.getAgentID());
     }
 
     public void deleteAgent(Long agentID) {
+        // Handle related votes
+//        List<Vote> agentsVotes = voteService.getVotesByAgentID(agentID);
+//        for (Vote vote : agentsVotes) {
+//            vote.setVoter(null);
+//        }
+
         boolean exists = agentRepository.existsById(agentID);
         if (!exists) {
             throw new IllegalStateException("User with id: " + agentID + " does not exist");
@@ -36,21 +53,39 @@ public class AgentService {
         agentRepository.deleteById(agentID);
     }
 
+    // TODO: Abstract to field validation function and reuse on create
     @Transactional
-    public void updateAgent(Long agentID, String username, String email, String password) {
+    public Agent updateAgent(Long agentID, String bodyString) {
         Agent agent = agentRepository.findById(agentID).orElseThrow(() -> new IllegalStateException("User with id: " + agentID + " does not exist"));
+
+        JsonObject body = new Gson().fromJson(bodyString, JsonObject.class);
+
+        //TODO: Error handling, field validation!
+        String username = body.get("username").getAsString();
+        String email = body.get("email").getAsString();
+        String password = body.get("password").getAsString();
+        String role = body.get("role").getAsString();
+
         if (username != null && username.length() > 0) {
             agent.setUsername(username);
         }
         if (email != null && email.length() > 0) {
             agent.setEmail(email);
         }
-        if (password != null && password.length() > 6) {
-            agent.setEmail(email);
+        if (password != null) {//&& password.length() > 6) {
+            agent.setPassword(password);
+        }
+//        else {
+//            throw new IllegalStateException("Password must be a string of characters longer than 6");
+//        }
+        if (role != null && allowedRoles.contains(role)) {
+            agent.setRole(Role.valueOf(role));
         }
         else {
-            throw new IllegalStateException("Password must be a string of characters longer than 6");
+            throw new IllegalStateException("Role must be one of three strings: 'USER', 'ADMIN' or 'DEVICE', not: "+role);
         }
+
+        return this.getById(agentID);
 
     }
 }

@@ -10,6 +10,11 @@ import java.time.LocalDateTime;
 @Table
 public class Poll {
     public Poll() {}
+
+    public void setPollID(long pollID) {
+        this.pollID = pollID;
+    }
+
     public Poll(boolean isPrivate, int pin, LocalDateTime startTime, LocalDateTime endTime, int yesCount, int noCount, String question, Status status) {
         this.isPrivate = isPrivate;
         this.pin = pin;
@@ -41,9 +46,9 @@ public class Poll {
     // Attributes
     private boolean isPrivate;
     private int pin;
-    @JsonFormat(pattern="yyyy-MM-ddTHH-mm-ss")
+    @JsonFormat(pattern="yyyy-MM-dd HH-mm-ss")
     private LocalDateTime startTime;
-    @JsonFormat(pattern="yyyy-MM-ddTHH-mm-ss")
+    @JsonFormat(pattern="yyyy-MM-dd HH-mm-ss")
     private LocalDateTime endTime;
     private int yesCount;
     private int noCount;
@@ -80,6 +85,9 @@ public class Poll {
         isPrivate = aPrivate;
     }
 
+    public long getPollID() {
+        return pollID;
+    }
     public int getPin() {
         return pin;
     }
