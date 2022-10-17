@@ -69,7 +69,7 @@ public class PollController {
     }
 
     @PutMapping(path = "{pollID}")
-    public void updatePoll(@PathVariable("pollID") Long pollID, @RequestBody Poll poll){
+    public Poll updatePoll(@PathVariable("pollID") Long pollID, @RequestBody Poll poll){
         int noCount = poll.getNoCount();
         int yesCount = poll.getYesCount();
         LocalDateTime startTime = poll.getStartTime();
@@ -78,6 +78,7 @@ public class PollController {
         int pin = poll.getPin();
         String question = poll.getQuestion();
         pollService.updatePoll(pollID, noCount, yesCount, startTime, endTime, isPrivate, pin, question);
+        return pollService.getPollById(poll.getPollID());
     }
 
     // Vote handling

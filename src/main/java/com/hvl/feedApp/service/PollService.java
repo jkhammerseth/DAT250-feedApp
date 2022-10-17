@@ -29,6 +29,12 @@ public class PollService {
     }
 
     public Poll createNewPoll(Poll poll) {
+        if (!poll.isPrivate()) {
+            poll.setPin(0);
+        }
+        if (poll.getEndTime().isBefore(LocalDateTime.now())) {
+            throw new IllegalStateException("Cannot create expired Poll with datetime "+poll.getEndTime());
+        }
         return pollRepository.save(poll);
     }
 
@@ -46,7 +52,7 @@ public class PollService {
         poll.setYesCount(yesCount);
         poll.setPrivate(isPrivate);
         poll.setPin(pin);
-        if (question != null && question.length()>0){
+        if (question != null && question.length()>0) {
             poll.setQuestion(question);
         }
     }

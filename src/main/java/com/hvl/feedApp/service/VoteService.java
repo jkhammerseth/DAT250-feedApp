@@ -17,7 +17,7 @@ import com.hvl.feedApp.controller.PollController;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.Optional;
 
 
 @Service
@@ -104,7 +104,7 @@ public class VoteService {
         voteRepository.deleteById(voteID);
     }
     @Transactional
-    public void updateVoteById(Long voteID, String bodyString){
+    public Vote updateVoteById(Long voteID, String bodyString){
         Vote vote = voteRepository.findById(voteID).orElseThrow(() -> new IllegalStateException("Vote with id: "+ voteID + " does not exist"));
 
         Poll poll = vote.getPoll();
@@ -131,10 +131,8 @@ public class VoteService {
             poll.setNoCount(poll.getNoCount()-1);
         }
 
-
-
         Vote updatedVote =  new Vote(answerYes, voter, poll);
-        voteRepository.save(updatedVote);
+        return voteRepository.save(updatedVote);
         //return updatedVote;
         //do changes to vote here.. vote.setAnswer etc
 
