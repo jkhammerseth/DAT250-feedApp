@@ -1,5 +1,8 @@
 package com.hvl.feedApp.controller;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.hvl.feedApp.Agent;
 import com.hvl.feedApp.Vote;
 import com.hvl.feedApp.service.VoteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,5 +36,5 @@ public class VoteController {
     }
 
     @PutMapping(path = "{voteID}")
-    public void updateVoteById(@PathVariable("voteID") Long voteID){voteService.updateVoteById(voteID);}
+    public void updateVodeById(@PathVariable("voteID") Long voteID){voteService.updateVoteById(voteID);}
 }
