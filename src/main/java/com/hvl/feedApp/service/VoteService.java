@@ -104,9 +104,41 @@ public class VoteService {
         voteRepository.deleteById(voteID);
     }
     @Transactional
-    public void updateVoteById(Long voteID){
-        voteRepository.findById(voteID).orElseThrow(() -> new IllegalStateException("Vote with id: "+ voteID + " does not exist"));
+    public void updateVoteById(Long voteID, String bodyString){
+        Vote vote = voteRepository.findById(voteID).orElseThrow(() -> new IllegalStateException("Vote with id: "+ voteID + " does not exist"));
+
+        Poll poll = vote.getPoll();
+        boolean wasYes = vote.getAnswer();
+
+        JsonObject voteJson = new Gson().fromJson(bodyString, JsonObject.class);
+
+        //TODO: Error handling, field validation!
+        Long voterID = voteJson.get("voter_id").getAsLong(); // "voter_id":2,
+        boolean answerYes = voteJson.get("answer_yes").getAsBoolean();
+
+        Agent voter = agentService.getById(voterID);
+        //Poll poll = pollService.getPollById(pollID);
+
+        // increment or decrement poll answer count
+        if (answerYes) {
+            poll.setYesCount(poll.getYesCount()+1);
+        }else if (!answerYes) {
+            poll.setNoCount(poll.getNoCount()+1);
+        }
+        if (wasYes) {
+            poll.setYesCount(poll.getYesCount()-1);
+        }else if (!wasYes) {
+            poll.setNoCount(poll.getNoCount()-1);
+        }
+
+
+
+        Vote updatedVote =  new Vote(answerYes, voter, poll);
+        voteRepository.save(updatedVote);
+        //return updatedVote;
         //do changes to vote here.. vote.setAnswer etc
+
+
     }
 
 }
