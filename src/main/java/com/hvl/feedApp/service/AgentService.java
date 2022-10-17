@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.hvl.feedApp.Agent;
 import com.hvl.feedApp.Enums.Role;
+import com.hvl.feedApp.Poll;
 import com.hvl.feedApp.Vote;
 import com.hvl.feedApp.repository.AgentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +20,7 @@ import java.util.Set;
 public class AgentService {
 
     private final AgentRepository agentRepository;
-
     private static final Set<String> allowedRoles = new HashSet<String>(Arrays.asList("USER", "ADMIN", "DEVICE"));
-
 
     @Autowired
     public AgentService(AgentRepository agentRepository) {

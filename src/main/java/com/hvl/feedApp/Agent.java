@@ -3,6 +3,7 @@ package com.hvl.feedApp;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 import com.hvl.feedApp.Enums.Role;
 
@@ -31,8 +32,9 @@ public class Agent {
     // Relations
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
+    @Transient
     //@JoinColumn(name = "owner_id")
-    private List<Poll> ownedPolls;
+    private List<Poll> ownedPolls = new ArrayList<>();
 
     // Attributes
     private String username;

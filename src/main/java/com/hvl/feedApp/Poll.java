@@ -46,9 +46,9 @@ public class Poll {
     // Attributes
     private boolean isPrivate;
     private int pin;
-    @JsonFormat(pattern="yyyy-MM-dd HH-mm-ss")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime startTime;
-    @JsonFormat(pattern="yyyy-MM-dd HH-mm-ss")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime endTime;
     private int yesCount;
     private int noCount;
@@ -134,10 +134,6 @@ public class Poll {
 
     public void setQuestion(String question) {
         this.question = question;
-    }
-
-    public Status getStatus() {
-        return status;
     }
 
     public void setStatus(Status status) {

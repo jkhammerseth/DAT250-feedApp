@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -38,11 +40,12 @@ public class PollService {
         pollRepository.deleteById(pollID);
     }
     @Transactional
-    public void updatePoll(Long pollID, String question) {
+    public void updatePoll(Long pollID, int noCount, int yesCount, LocalDateTime startTime, LocalDateTime endTime, boolean isPrivate, int pin, String question) {
         Poll poll = pollRepository.findById(pollID).orElseThrow(() -> new IllegalStateException("Poll with id: "+ pollID + " does not exist"));
+        poll.setNoCount(noCount);
+        poll.setYesCount(yesCount);
         if (question != null && question.length()>0){
             poll.setQuestion(question);
         }
-
     }
 }

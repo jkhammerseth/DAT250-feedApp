@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import java.time.LocalDateTime;
 
 import javax.naming.AuthenticationNotSupportedException;
 
@@ -44,13 +45,16 @@ public class PollController {
 
     @PostMapping("")
     public ResponseEntity<Poll> createNewPoll(@RequestBody Poll poll){
-        //JsonObject test = poll;
-        //System.out.println("ditta her: "+test.get("owner"));
-        //, @RequestParam Long owner_id
-        //try {(owner)}
-        //poll.setOwner(voteUserService.getById(owner_id));
-        //System.out.println("dis work?"+poll.toString());
-        return new ResponseEntity<Poll>(pollService.createNewPoll(poll), HttpStatus.CREATED);
+        long ownerID = poll.getOwner().getAgentID();
+        try {
+            Agent owner = agentService.getById(ownerID);
+            poll.setOwner(owner);
+            owner.addOwnedPoll(poll);
+            return new ResponseEntity<Poll>(pollService.createNewPoll(poll), HttpStatus.CREATED);
+        } catch (Exception e) {
+            // Burde sette: HttpStatus.BAD_REQUEST
+            throw new IllegalStateException("User with id: "+ ownerID + " does not exist");
+        }
     }
 
     @DeleteMapping(path = "{pollID}")
@@ -59,10 +63,15 @@ public class PollController {
     }
 
     @PutMapping(path = "{pollID}")
-    public void updatePoll(
-            @PathVariable("pollID") Long pollID,
-            @RequestParam(required = false) String question){
-        pollService.updatePoll(pollID, question);
+    public void updatePoll(@PathVariable("pollID") Long pollID, @RequestBody Poll poll){
+        int noCount = poll.getNoCount();
+        int yesCount = poll.getYesCount();
+        LocalDateTime startTime = poll.getStartTime();
+        LocalDateTime endTime = poll.getEndTime();
+        boolean isPrivate = poll.isPrivate();
+        int pin = poll.getPin();
+        String question = poll.getQuestion();
+        pollService.updatePoll(pollID, noCount, yesCount, startTime, endTime, isPrivate, pin, question);
     }
 
     // Vote handling
