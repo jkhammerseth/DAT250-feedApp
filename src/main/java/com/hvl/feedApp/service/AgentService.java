@@ -32,6 +32,7 @@ public class AgentService {
     }
 
     public Agent createNewAgent(Agent agent) {
+        /*
         if (agent.getUsername().isEmpty() || agent.getUsername().isBlank()) {
             throw new IllegalArgumentException("Username cannot be empty");
         }
@@ -45,6 +46,7 @@ public class AgentService {
         if (role == null && !allowedRoles.contains(role)) {
             throw new IllegalStateException("Role must be one of three strings: 'USER', 'ADMIN' or 'DEVICE', not: "+role);
         }
+         */
 
         agentRepository.save(agent);
         return this.getById(agent.getAgentID());
@@ -62,6 +64,7 @@ public class AgentService {
         if (agentToDelete.isEmpty()) {
             throw new IllegalStateException("User with id: " + agentID + " does not exist");
         }
+
         agentRepository.deleteById(agentID);
     }
 
