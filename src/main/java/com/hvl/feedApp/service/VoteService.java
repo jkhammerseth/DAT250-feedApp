@@ -59,7 +59,7 @@ public class VoteService {
     }
 
     public List<Vote> getVotesByAgentID(Long agentID){
-        List<Vote> votes = voteRepository.findAll();
+        List<Vote> votes = voteRepository.findAll();//TODO: findBy map to preserve memory
 
         List<Vote> votesByAgentID = new ArrayList<Vote>();
 

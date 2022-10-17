@@ -43,6 +43,7 @@ public class AgentController {
     }
     @DeleteMapping(path = "{id}")
     public void deleteAgent(@PathVariable("id") Long agentID){
+
         agentService.deleteAgent(agentID);
     }
     @PutMapping(path = "{id}")

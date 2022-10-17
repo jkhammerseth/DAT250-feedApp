@@ -1,6 +1,9 @@
 package com.hvl.feedApp;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -17,9 +20,9 @@ public class Vote {
     @Column(name="vote_id")
     private long voteID;
     private boolean answer;
-    @OneToOne//(cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @ManyToOne//(cascade = CascadeType.REMOVE, orphanRemoval = true)
     private Agent voter;
-    @OneToOne//(cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @ManyToOne//(cascade = CascadeType.REMOVE, orphanRemoval = true)
     private Poll poll;
 
     public Vote(boolean answer, Agent voter, Poll poll) {
@@ -47,6 +50,7 @@ public class Vote {
     public Agent getVoter() {
         return voter;
     }
+
     public void setVoter(Agent voter) {
         this.voter = voter;
     }

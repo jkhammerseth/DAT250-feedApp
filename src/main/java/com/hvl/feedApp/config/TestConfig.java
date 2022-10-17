@@ -56,6 +56,7 @@ public class TestConfig {
             testFuturePoll.setStartTime(LocalDateTime.now().plusDays(1));
             testFuturePoll.setEndTime(LocalDateTime.now().plusDays(2));
 
+           // List<Vote> bobsVotes = new ArrayList<Vote>();
             Vote bobsVote = new Vote();
             bobsVote.setPoll(testPoll);
             bobsVote.setVoter(Bob);
@@ -68,6 +69,9 @@ public class TestConfig {
             bobsVote1.setAnswer(true);
             testPoll.setYesCount(testPoll.getYesCount()+1);
 
+/*            bobsVotes.add(bobsVote);
+            bobsVotes.add(bobsVote1);
+            Bob.setGivenVotes(bobsVotes);*/
 
             Vote geirsVote = new Vote();
             geirsVote.setPoll(testPoll);

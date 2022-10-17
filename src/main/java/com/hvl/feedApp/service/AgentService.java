@@ -7,6 +7,7 @@ import com.hvl.feedApp.Enums.Role;
 import com.hvl.feedApp.Poll;
 import com.hvl.feedApp.Vote;
 import com.hvl.feedApp.repository.AgentRepository;
+import com.hvl.feedApp.repository.VoteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,11 +21,14 @@ import java.util.Set;
 public class AgentService {
 
     private final AgentRepository agentRepository;
+    private final VoteRepository voteRepository;
+
     private static final Set<String> allowedRoles = new HashSet<String>(Arrays.asList("USER", "ADMIN", "DEVICE"));
 
     @Autowired
-    public AgentService(AgentRepository agentRepository) {
+    public AgentService(AgentRepository agentRepository, VoteRepository voteRepository) {
         this.agentRepository = agentRepository;
+        this.voteRepository = voteRepository;
     }
     public List<Agent> getAgents() {
         return agentRepository.findAll();
@@ -39,16 +43,21 @@ public class AgentService {
     }
 
     public void deleteAgent(Long agentID) {
-        // Handle related votes
-//        List<Vote> agentsVotes = voteService.getVotesByAgentID(agentID);
-//        for (Vote vote : agentsVotes) {
-//            vote.setVoter(null);
-//        }
-
-        boolean exists = agentRepository.existsById(agentID);
-        if (!exists) {
+        // Find agent
+        Agent agent = this.getById(agentID);
+        if (agent==null) {
             throw new IllegalStateException("User with id: " + agentID + " does not exist");
         }
+
+
+        // Find related votes
+        List<Vote> agentsVotes = voteRepository.findAll();
+        for (Vote vote : agentsVotes) {
+            if (vote.getVoter().getAgentID()  == agent.getAgentID()) {
+                voteRepository.delete(vote);
+            }
+        }
+
         agentRepository.deleteById(agentID);
     }
 

@@ -5,7 +5,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.hvl.feedApp.Enums.Role;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Table
@@ -25,15 +29,36 @@ public class Agent {
     // Relations
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
-    @Transient
+    //@Transient
     //@JoinColumn(name = "owner_id")
-    private List<Poll> ownedPolls = new ArrayList<>();
+    private List<Poll> ownedPolls;
+
+/*
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "voter")
+    @JsonIgnore
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private List<Vote> givenVotes;
+*/
+
 
     // Attributes
     private String username;
     private String email;
     // TODO: implement hashed passwords!
     private String password;
+/*
+
+    public List<Vote> getGivenVotes() {
+        return givenVotes;
+    }
+*/
+/*
+
+    public void setGivenVotes(List<Vote> givenVotes) {
+        this.givenVotes = givenVotes;
+    }
+*/
+
     private Role role;
 
     // Constructors
