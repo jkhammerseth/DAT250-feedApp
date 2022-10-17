@@ -6,12 +6,6 @@ import javax.persistence.*;
 @Entity
 @Table
 public class Vote {
-    public Vote(boolean answer, Agent voter, Poll poll) {
-        this.answer = answer;
-        this.voter = voter;
-        this.poll = poll;
-    }
-
     @Id
     @SequenceGenerator(
             name = "vote_sequence",
@@ -23,47 +17,42 @@ public class Vote {
     @Column(name="vote_id")
     private long voteID;
     private boolean answer;
-
-    public long getVoteID() {
-        return voteID;
-    }
-
-    public void setVoteID(long voteID) {
-        this.voteID = voteID;
-    }
-
-    public boolean isAnswer() {
-        return answer;
-    }
-
     @OneToOne//(cascade = CascadeType.REMOVE, orphanRemoval = true)
     private Agent voter;
     @OneToOne//(cascade = CascadeType.REMOVE, orphanRemoval = true)
     private Poll poll;
 
-    public Vote() {
+    public Vote(boolean answer, Agent voter, Poll poll) {
+        this.answer = answer;
+        this.voter = voter;
+        this.poll = poll;
     }
 
+    public long getVoteID() {
+        return voteID;
+    }
+    public void setVoteID(long voteID) {
+        this.voteID = voteID;
+    }
+    public boolean isAnswer() {
+        return answer;
+    }
+    public Vote() {}
     public boolean getAnswer() {
         return answer;
     }
-
     public void setAnswer(boolean answer) {
         this.answer = answer;
     }
-
     public Agent getVoter() {
         return voter;
     }
-
     public void setVoter(Agent voter) {
         this.voter = voter;
     }
-
     public Poll getPoll() {
         return poll;
     }
-
     public void setPoll(Poll poll) {
         this.poll = poll;
     }

@@ -44,6 +44,8 @@ public class PollService {
         Poll poll = pollRepository.findById(pollID).orElseThrow(() -> new IllegalStateException("Poll with id: "+ pollID + " does not exist"));
         poll.setNoCount(noCount);
         poll.setYesCount(yesCount);
+        poll.setPrivate(isPrivate);
+        poll.setPin(pin);
         if (question != null && question.length()>0){
             poll.setQuestion(question);
         }

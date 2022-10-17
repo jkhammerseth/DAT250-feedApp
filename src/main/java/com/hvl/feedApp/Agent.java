@@ -10,14 +10,7 @@ import com.hvl.feedApp.Enums.Role;
 @Entity
 @Table
 public class Agent {
-    public Agent() {}
 
-    public Agent(String username, String email, String password, Role role) {
-        this.username = username;
-        this.email = email;
-        this.password = password;
-        this.role = role;
-    }
     @Id
     @SequenceGenerator(
             name = "agent_sequence",
@@ -42,6 +35,16 @@ public class Agent {
     // TODO: implement hashed passwords!
     private String password;
     private Role role;
+
+    // Constructors
+    public Agent() {}
+
+    public Agent(String username, String email, String password, Role role) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.role = role;
+    }
 
     // Methods
     public void addOwnedPoll(Poll poll){

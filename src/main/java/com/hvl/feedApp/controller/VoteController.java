@@ -35,6 +35,4 @@ public class VoteController {
         voteService.deleteVote(voteID);
     }
 
-    @PutMapping(path = "{voteID}")
-    public void updateVodeById(@PathVariable("voteID") Long voteID){voteService.updateVoteById(voteID);}
 }

@@ -50,10 +50,16 @@ public class PollController {
             Agent owner = agentService.getById(ownerID);
             poll.setOwner(owner);
             owner.addOwnedPoll(poll);
+            poll.refreshStatus();
+            if(poll.getEndTime().isBefore(LocalDateTime.now())){
+                // BAD_REQUEST her og
+                throw new IllegalStateException();
+            }
             return new ResponseEntity<Poll>(pollService.createNewPoll(poll), HttpStatus.CREATED);
         } catch (Exception e) {
             // Burde sette: HttpStatus.BAD_REQUEST
-            throw new IllegalStateException("User with id: "+ ownerID + " does not exist");
+            // midlertidig exception for poll uten gyldig agent og om man prøva å lage en EXPIRED poll
+            throw new IllegalStateException("Something went wrong");
         }
     }
 
@@ -79,7 +85,6 @@ public class PollController {
     public Vote createVote(
             @PathVariable Long pollID,
             @RequestBody String voteString){
-
         return voteService.createVote(pollID, voteString);
     }
 

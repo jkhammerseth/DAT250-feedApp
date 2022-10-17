@@ -11,10 +11,6 @@ import java.time.LocalDateTime;
 public class Poll {
     public Poll() {}
 
-    public void setPollID(long pollID) {
-        this.pollID = pollID;
-    }
-
     public Poll(boolean isPrivate, int pin, LocalDateTime startTime, LocalDateTime endTime, int yesCount, int noCount, String question, Status status) {
         this.isPrivate = isPrivate;
         this.pin = pin;
@@ -23,6 +19,7 @@ public class Poll {
         this.yesCount = yesCount;
         this.noCount = noCount;
         this.question = question;
+        this.status = status;
 
         // Setting status
         StatusHandler statusHandler = new StatusHandler();
@@ -53,9 +50,13 @@ public class Poll {
     private int yesCount;
     private int noCount;
     private String question;
-    @Transient
+    //@Transient
     @Enumerated(EnumType.STRING)
     private Status status;
+
+    public void setPollID(long pollID) {
+        this.pollID = pollID;
+    }
 
     public void refreshStatus() {
         StatusHandler statusHandler = new StatusHandler();
@@ -88,6 +89,7 @@ public class Poll {
     public long getPollID() {
         return pollID;
     }
+
     public int getPin() {
         return pin;
     }
