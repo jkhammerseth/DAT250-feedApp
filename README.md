@@ -24,10 +24,9 @@ Import this [Postman JSON](https://www.getpostman.com/collections/51079e8f1eabbe
 
 # New branches:
 git pull
-git checkout -b feature/*YOUR BRANCH NAME WITH TRELLO-CODE (B-1/F-1)*
 git checkout -b feature/b-1-looking-up-iot
+*YOUR BRANCH NAME WITH TRELLO-CODE (B-1/F-1)*
 git status
 git add . 
 git commit -m "B-1: implementation of iot"
-git push
-git upstream
+git push --set-upstream origin feature/b-1-looking-up-iot
