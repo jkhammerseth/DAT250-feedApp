@@ -20,3 +20,13 @@
 
 # Postman:
 Import this [Postman JSON](https://www.getpostman.com/collections/51079e8f1eabbe1f4071) into your postman applicaton for API tests 
+
+
+# New branches:
+git pull
+git checkout -b feature/b-1-looking-up-iot
+*YOUR BRANCH NAME WITH TRELLO-CODE (B-1/F-1)*
+git status
+git add . 
+git commit -m "B-1: implementation of iot"
+git push --set-upstream origin feature/b-1-looking-up-iot
