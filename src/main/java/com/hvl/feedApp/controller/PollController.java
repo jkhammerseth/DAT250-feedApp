@@ -45,8 +45,8 @@ public class PollController {
 
     @PostMapping("")
     public ResponseEntity<Poll> createNewPoll(@RequestBody Poll poll){
-        long ownerID = poll.getOwner().getAgentID();
         try {
+            long ownerID = poll.getOwner().getAgentID();
             Agent owner = agentService.getById(ownerID);
             poll.setOwner(owner);
             owner.addOwnedPoll(poll);

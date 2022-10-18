@@ -41,11 +41,12 @@ public class AgentController {
     public Agent createNewAgent(@RequestBody Agent agent){
         return agentService.createNewAgent(agent);
     }
+
     @DeleteMapping(path = "{id}")
     public void deleteAgent(@PathVariable("id") Long agentID){
-
         agentService.deleteAgent(agentID);
     }
+
     @PutMapping(path = "{id}")
     public Agent updateAgent(
             @PathVariable("id") Long agentID,

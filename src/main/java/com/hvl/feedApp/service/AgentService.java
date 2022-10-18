@@ -44,11 +44,12 @@ public class AgentService {
 
     public void deleteAgent(Long agentID) {
         // Find agent
-        Agent agent = this.getById(agentID);
-        if (agent==null) {
+        Boolean exists = agentRepository.existsById(agentID);
+
+        if (!exists) {
             throw new IllegalStateException("User with id: " + agentID + " does not exist");
         }
-
+        Agent agent = this.getById(agentID);
 
         // Find related votes
         List<Vote> agentsVotes = voteRepository.findAll();
