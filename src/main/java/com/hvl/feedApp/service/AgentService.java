@@ -34,7 +34,12 @@ public class AgentService {
         return agentRepository.findAll();
     }
     public Agent getById(Long agentID){
-        return agentRepository.findById(agentID).orElseThrow(() -> new IllegalStateException("Vote with id: "+ agentID + " does not exist"));
+        return agentRepository.findById(agentID).orElseThrow(() -> new IllegalStateException("User with id: "+ agentID + " does not exist"));
+    }
+
+    public List<Poll> getOwnedPolls(Long agentID){
+        Agent user =  agentRepository.findById(agentID).orElseThrow(() -> new IllegalStateException("User with id: "+ agentID + " does not exist"));
+        return user.getOwnedPolls();
     }
 
     public Agent createNewAgent(Agent agent) {

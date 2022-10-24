@@ -31,10 +31,13 @@ public class PollService {
     public Poll createNewPoll(Poll poll) {
         if (!poll.isPrivate()) {
             poll.setPin(0);
+        } else if (poll.isPrivate() && poll.getPin() == 0) {
+            throw new IllegalStateException("Private polls must have a pincode");
         }
         if (poll.getEndTime().isBefore(LocalDateTime.now())) {
             throw new IllegalStateException("Cannot create expired Poll with datetime "+poll.getEndTime());
         }
+        poll.setStatus(poll.getStartTime(), poll.getEndTime());
         return pollRepository.save(poll);
     }
 

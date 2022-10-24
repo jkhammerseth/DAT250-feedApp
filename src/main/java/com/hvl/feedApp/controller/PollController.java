@@ -1,10 +1,6 @@
 package com.hvl.feedApp.controller;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import com.hvl.feedApp.Agent;
 import com.hvl.feedApp.Poll;
 import com.hvl.feedApp.Vote;
@@ -38,6 +34,11 @@ public class PollController {
         return pollService.getPolls();
     }
 
+    @GetMapping(path = "{agentID}/userPolls")
+    public List<Poll> getOwnedPolls(@PathVariable("agentID") Long agentID){
+        return agentService.getOwnedPolls(agentID);
+    }
+
     @GetMapping(path = "{pollID}")
     public Poll getPollById(@PathVariable("pollID") Long pollID){
         return pollService.getPollById(pollID);
@@ -46,19 +47,14 @@ public class PollController {
     @PostMapping("")
     public ResponseEntity<Poll> createNewPoll(@RequestBody Poll poll){
         try {
+            // set owner and add poll to owners ownedPolls
             long ownerID = poll.getOwner().getAgentID();
             Agent owner = agentService.getById(ownerID);
             poll.setOwner(owner);
             owner.addOwnedPoll(poll);
-            poll.refreshStatus();
-            if(poll.getEndTime().isBefore(LocalDateTime.now())){
-                // BAD_REQUEST her og
-                throw new IllegalStateException();
-            }
+
             return new ResponseEntity<Poll>(pollService.createNewPoll(poll), HttpStatus.CREATED);
         } catch (Exception e) {
-            // Burde sette: HttpStatus.BAD_REQUEST
-            // midlertidig exception for poll uten gyldig agent og om man prøva å lage en EXPIRED poll
             throw new IllegalStateException("Something went wrong");
         }
     }

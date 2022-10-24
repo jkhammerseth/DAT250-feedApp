@@ -9,30 +9,9 @@ import java.time.LocalDateTime;
 @Entity
 @Table
 public class Poll {
-    public Poll() {}
-
-    public Poll(boolean isPrivate, int pin, LocalDateTime startTime, LocalDateTime endTime, int yesCount, int noCount, String question, Status status) {
-        this.isPrivate = isPrivate;
-        this.pin = pin;
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.yesCount = yesCount;
-        this.noCount = noCount;
-        this.question = question;
-        this.status = status;
-
-        // Setting status
-        StatusHandler statusHandler = new StatusHandler();
-        this.status = statusHandler.getStatus(this.startTime, this.endTime);
-    }
-
     @Id
-    @SequenceGenerator(
-            name = "poll_sequence",
-            sequenceName = "poll_sequence")
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "poll_sequence")
+    @SequenceGenerator(name = "poll_sequence", sequenceName = "poll_sequence")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "poll_sequence")
     @Column(name="poll_id")
     private long pollID;
 
@@ -50,24 +29,24 @@ public class Poll {
     private int yesCount;
     private int noCount;
     private String question;
-    //@Transient
     @Enumerated(EnumType.STRING)
     private Status status;
 
-    public void setPollID(long pollID) {
-        this.pollID = pollID;
+    public Poll() {}
+
+    public Poll(boolean isPrivate, int pin, LocalDateTime startTime, LocalDateTime endTime, int yesCount, int noCount, String question, Status status) {
+        this.isPrivate = isPrivate;
+        this.pin = pin;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.yesCount = yesCount;
+        this.noCount = noCount;
+        this.question = question;
+        this.status = status;
     }
 
-    public void refreshStatus() {
-        StatusHandler statusHandler = new StatusHandler();
-        this.status = statusHandler.getStatus(this.startTime, this.endTime);
-/*        if (startTime.isBefore(LocalDateTime.now()) && endTime.isAfter(LocalDateTime.now())) {
-            this.status = Status.ACTIVE;
-        } else if (startTime.isAfter(LocalDateTime.now()) && endTime.isAfter(LocalDateTime.now())) {
-            this.status = Status.FUTURE;
-        } else {
-            this.status = Status.EXPIRED;
-        }*/
+    public void setPollID(long pollID) {
+        this.pollID = pollID;
     }
 
     public Agent getOwner() {
@@ -138,21 +117,18 @@ public class Poll {
         this.question = question;
     }
 
-    public void setStatus(Status status) {
-        this.status = status;
-    }
-}
-
-class StatusHandler {
-    public static Status getStatus(LocalDateTime startTime, LocalDateTime endTime) {
+    public void setStatus(LocalDateTime startTime, LocalDateTime endTime) {
         if (startTime.isBefore(LocalDateTime.now()) && endTime.isAfter(LocalDateTime.now())) {
-            return Status.ACTIVE;
+            this.status = Status.ACTIVE;
         } else if (startTime.isAfter(LocalDateTime.now()) && endTime.isAfter(LocalDateTime.now())) {
-            return Status.FUTURE;
+            this.status = Status.FUTURE;
         } else {
-            return Status.EXPIRED;
+            this.status =  Status.EXPIRED;
         }
     }
 
+    public Status getStatus() {
+        return status;
+    }
 }
 

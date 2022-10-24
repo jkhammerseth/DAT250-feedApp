@@ -16,13 +16,8 @@ import org.hibernate.annotations.OnDeleteAction;
 public class Agent {
 
     @Id
-    @SequenceGenerator(
-            name = "agent_sequence",
-            sequenceName = "agent_sequence",
-            allocationSize = 1)
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "agent_sequence")
+    @SequenceGenerator(name = "agent_sequence", sequenceName = "agent_sequence", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "agent_sequence")
     @Column(name="agent_id")
     private long agentID;
 
