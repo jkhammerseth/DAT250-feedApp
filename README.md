@@ -19,6 +19,8 @@
 
 
 # Postman:
+USE THIS TEAM WORKSPACE IN POSTMAN INSTEAD: https://app.getpostman.com/join-team?invite_code=8140d1f833d79e1de3d6fc3416e68271&target_code=5e6b99c0970eb0c4cf77a071ba346c4f
+
 Import this [Postman JSON](https://www.getpostman.com/collections/51079e8f1eabbe1f4071) into your postman applicaton for API tests 
 
 
